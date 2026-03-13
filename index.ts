@@ -1,9 +1,9 @@
 import type {
     Dock,
+    Options,
     DockResult,
     Sequential,
     SequentialResponse,
-    Options,
 } from './types';
 
 class Duckline<T> implements Sequential<T> {
@@ -18,7 +18,7 @@ class Duckline<T> implements Sequential<T> {
         this._consumer = consumer;
     }
 
-    async *executeSequentially(): SequentialResponse<T> {
+    async *execute(): SequentialResponse<T> {
         for (let task of this._tasks) {
             try {
                 const data = await (typeof task === 'function' ? task() : task);
@@ -31,10 +31,9 @@ class Duckline<T> implements Sequential<T> {
             }
         }
     }
-
     async run(): Promise<void> {
         try {
-            for await (const result of this.executeSequentially()) {
+            for await (const result of this.execute()) {
                 if (result.ok) {
                     this._emit(result);
                     this.results.push(result.data);

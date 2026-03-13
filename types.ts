@@ -7,7 +7,7 @@ export type DockResult<T> =
 export type SequentialResponse<T> = AsyncGenerator<DockResult<T>, void, void>;
 
 export interface Sequential<T> {
-    executeSequentially(): AsyncGenerator<DockResult<T>, void, void>;
+    execute(): AsyncGenerator<DockResult<T>, void, void>;
     run(): Promise<void>;
 }
 
