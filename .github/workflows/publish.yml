@@ -1,0 +1,36 @@
+name: Publish to NPM
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Set publish tag
+        id: publish_tag
+        run: |
+          if [[ "${{ github.ref_name }}" == *"beta"* ]]; then
+            echo "tag=--tag beta" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref_name }}" == *"alpha"* ]]; then
+            echo "tag=--tag alpha" >> $GITHUB_OUTPUT
+          else
+            echo "tag=" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Publish
+        run: npm publish --access public ${{ steps.publish_tag.outputs.tag }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
