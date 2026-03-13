@@ -11,13 +11,18 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - uses: actions/setup-node@v3
         with:
           node-version: '18'
           registry-url: 'https://registry.npmjs.org'
+          cache: 'pnpm'
 
       - name: Install dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Set publish tag
         id: publish_tag
@@ -31,6 +36,6 @@ jobs:
           fi
 
       - name: Publish
-        run: npm publish --access public ${{ steps.publish_tag.outputs.tag }}
+        run: pnpm publish --access public --no-git-checks ${{ steps.publish_tag.outputs.tag }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
