@@ -1,10 +1,11 @@
 # Duckline
 
+[![bundle size](https://img.shields.io/bundlephobia/minzip/duckline)](https://bundlephobia.com/package/duckline)
+
 Run a list of async tasks **sequentially** and collect results.
+🦆🦆🦆🦆
 
 ## Install
-
-If you publish this package later, consumers can do:
 
 ```bash
 npm i duckline
