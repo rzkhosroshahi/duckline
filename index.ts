@@ -1,19 +1,10 @@
-type Dock<T> = (() => Promise<T>) | Promise<T>;
-
-export type DockResult<T> =
-    | { ok: true; data: T }
-    | { ok: false; error: unknown };
-
-type SequentialResponse<T> = AsyncGenerator<DockResult<T>, void, void>;
-interface Sequential<T> {
-    executeSequentially(): AsyncGenerator<DockResult<T>, void, void>;
-    run(): Promise<void>;
-}
-type Options<T> = {
-    tasks: Dock<T>[];
-    throwErrors?: boolean;
-    consumer?: (task: DockResult<T>) => void;
-};
+import type {
+    Dock,
+    DockResult,
+    Sequential,
+    SequentialResponse,
+    Options,
+} from './types';
 
 class Duckline<T> implements Sequential<T> {
     results: T[] = [];
