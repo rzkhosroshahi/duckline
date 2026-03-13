@@ -8,6 +8,9 @@
     "build": "rollup -c",
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",

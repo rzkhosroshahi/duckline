@@ -24,6 +24,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
+      - name: Build
+        run: pnpm run build
+        
       - name: Set publish tag
         id: publish_tag
         run: |
