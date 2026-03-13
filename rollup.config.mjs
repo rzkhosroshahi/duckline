@@ -1,5 +1,6 @@
 import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
+import terser from "@rollup/plugin-terser";
 
 const input = "index.ts";
 
@@ -23,14 +24,14 @@ export default [
     plugins: [
       typescript({
         tsconfig: "./tsconfig.json",
-        target: "ES5",
-        lib: ["ES2018", "ES2018.AsyncIterable", "DOM"],
+        target: "ES2020",
+        lib: ["ES2020", "DOM"],
         declaration: false,
         sourceMap: true,
       }),
+      terser(),
     ],
   },
-
   {
     input,
     output: [{ file: "dist/index.d.ts", format: "es" }],
