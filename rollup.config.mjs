@@ -24,8 +24,8 @@ export default [
     plugins: [
       typescript({
         tsconfig: "./tsconfig.json",
-        target: "ES2020",
-        lib: ["ES2020", "DOM"],
+        target: "ES2024",
+        lib: ["ES2024", "DOM"],
         declaration: false,
         sourceMap: true,
       }),
